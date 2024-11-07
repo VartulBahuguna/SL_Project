@@ -1,0 +1,86 @@
+medical-platform/
+├── app/                         # Backend (Flask API)
+│   ├── __init__.py              # Initializes the Flask app and configures blueprints, DB, and JWT
+│   ├── models.py                # Database models for the app
+│   ├── routes/                  # Contains route files for different app sections
+│   │   ├── auth.py              # Authentication routes (login, register, etc.)
+│   │   ├── patient.py           # Routes related to patient functionalities
+│   │   ├── doctor.py            # Routes related to doctor functionalities
+│   │   ├── admin.py             # Routes for admin functionalities
+├── frontend/                    # Frontend (React)
+│   ├── public/                  # Public assets for the React app
+│   │   └── index.html           # Main HTML template for React app
+│   ├── src/                     # React source code
+│   │   ├── components/          # Individual components for each part of the app
+│   │   │   ├── PatientDashboard.js   # Patient dashboard component
+│   │   │   ├── DoctorDashboard.js    # Doctor dashboard component
+│   │   │   ├── AdminDashboard.js     # Admin dashboard component
+│   │   │   └── Login.js              # Login component
+│   │   ├── services/            # Contains utility files like API calls
+│   │   │   └── api.js           # Contains functions for API calls (axios)
+│   │   ├── App.js               # Main React component, handles routing
+│   │   ├── index.js             # Entry point for the React app
+│   │   └── index.css            # Global styling for the React app (optional)
+│   ├── package.json             # Contains frontend dependencies and scripts
+├── static/                      # For static assets (e.g., images, reports) for Flask
+├── migrations/                  # Database migrations (if needed)
+├── Dockerfile                   # Docker configuration for the backend
+├── docker-compose.yml           # Docker Compose configuration to run frontend and backend
+├── Makefile                     # Automation tasks
+├── requirements.txt             # Python dependencies for the backend
+├── app.db                       # SQLite database file (if using SQLite)
+├── config.py                    # Configuration settings for Flask
+└── run.py                       # Entry point to start the Flask app
+
+
+medical-platform/
+├── app/                          # Backend (Flask API)
+│   ├── __init__.py               # Initializes the Flask app and configures blueprints, DB, and JWT
+│   ├── models.py                 # Database models for the app
+│   ├── routes/                   # Contains route files for different app sections
+│   │   ├── auth.py               # Authentication routes (login, register, etc.)
+│   │   ├── patient.py            # Routes related to patient functionalities
+│   │   ├── doctor.py             # Routes related to doctor functionalities
+│   │   ├── admin.py              # Routes for admin functionalities
+├── frontend/                     # Frontend (React)
+│   ├── public/                   # Public assets for the React app
+│   │   └── index.html            # Main HTML template for the React app
+│   ├── src/                      # React source code
+│   │   ├── components/           # Individual components for each part of the app
+│   │   │   ├── Auth/             # Components for authentication
+│   │   │   │   └── Login.js      # Login page component
+│   │   │   ├── Dashboard/        # Dashboard components for different user types
+│   │   │   │   ├── PatientDashboard.js   # Patient dashboard component
+│   │   │   │   ├── DoctorDashboard.js    # Doctor dashboard component
+│   │   │   │   └── AdminDashboard.js     # Admin dashboard component
+│   │   │   ├── Profile/          # Profile pages for different user roles
+│   │   │   │   ├── PatientProfile.js     # Patient profile page
+│   │   │   │   └── DoctorProfile.js      # Doctor profile page
+│   │   │   ├── Appointments/     # Appointment scheduling component
+│   │   │   │   └── ScheduleAppointment.js # Appointment scheduling page
+│   │   │   ├── Reports/          # Components for viewing and summarizing reports
+│   │   │   │   ├── Reports.js          # View patient reports
+│   │   │   │   └── ReportSummarization.js # Summarize patient reports
+│   │   │   ├── Analytics/        # Statistics and analytics for admin
+│   │   │   │   └── Statistics.js       # View platform statistics
+│   │   │   └── NotFound.js       # 404 page for undefined routes
+│   │   ├── styles/               # CSS files for styling each component
+│   │   │   ├── App.css           # Global styles for the app
+│   │   │   ├── Dashboard.css     # Styles for dashboard pages
+│   │   │   ├── Auth.css          # Styles for authentication pages
+│   │   │   ├── Profile.css       # Styles for profile pages
+│   │   │   ├── Reports.css       # Styles for reports pages
+│   │   │   └── Analytics.css     # Styles for analytics page
+│   │   ├── App.js                # Main React component, manages routes and layout
+│   │   ├── index.js              # Entry point for the React app
+│   │   └── index.css             # Global styling for the React app (optional)
+│   ├── package.json              # Contains frontend dependencies and scripts
+├── static/                       # For static assets (e.g., images, reports) for Flask
+├── migrations/                   # Database migrations (if using Flask-Migrate)
+├── Dockerfile                    # Docker configuration for the backend
+├── docker-compose.yml            # Docker Compose configuration to run both frontend and backend
+├── Makefile                      # Automation tasks for building and running the project
+├── requirements.txt              # Python dependencies for the backend
+├── app.db                        # SQLite database file (if using SQLite)
+├── config.py                     # Configuration settings for Flask
+└── run.py                        # Entry point to start the Flask app

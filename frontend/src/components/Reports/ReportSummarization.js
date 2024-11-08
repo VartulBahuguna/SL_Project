@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Reports.css';
+import '../../styles/Reports.css';
 
 function ReportSummary() {
   const [reportText, setReportText] = useState('');

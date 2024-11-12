@@ -1,6 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './components/Auth/Login';
+import LandingPage from './components/LandingPage';
+// import Login from './components/Auth/Login';
+import DoctorLogin from './components/Auth/Login/DoctorLogin';
+import PatientLogin from './components/Auth/Login/PatientLogin';
+import AdminLogin from './components/Auth/Login/AdminLogin';
+import PatientSignUp from './components/Auth/SignUp/PatientSignUp';
+import DoctorSignUp from './components/Auth/SignUp/DoctorSignUp';
 import PatientDashboard from './components/Dashboard/PatientDashboard';
 import DoctorDashboard from './components/Dashboard/DoctorDashboard';
 import AdminDashboard from './components/Dashboard/AdminDashboard';
@@ -16,7 +22,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<LandingPage />} />
+        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/doctor-login" element={<DoctorLogin />} />
+        <Route path="/patient-login" element={<PatientLogin />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/patient-signup" element={<PatientSignUp />} />
+        <Route path="/doctor-signup" element={<DoctorSignUp />} />
         <Route path="/patient-dashboard" element={<PatientDashboard />} />
         <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />

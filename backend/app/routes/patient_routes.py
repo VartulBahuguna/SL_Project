@@ -13,6 +13,7 @@ from flask_wtf.csrf import generate_csrf
 
 
 
+
 patient_blueprint = Blueprint('patient_blueprint', __name__)
 
 @patient_blueprint.route('/api/patient/login', methods=['POST'])
@@ -25,9 +26,10 @@ def login_patient():
 
         patient = Patient.query.filter_by(email=email).first()
         if patient and bcrypt.check_password_hash(patient.password, password):
-            # access_token = create_access_token(identity={'id': patient.id, 'role': 'patient'})
-            access_token = "random_thing"
-            return jsonify({'access_token': access_token}), 200
+            access_token = create_access_token(identity={'id': patient.id, 'role': 'patient'})
+            csrf_token = generate_csrf()
+            # access_token = "random_thing"
+            return jsonify({'access_token': access_token, "csrf_token" : csrf_token}), 200
 
         return jsonify({'message': 'Invalid credentials'}), 401
     except Exception as e:

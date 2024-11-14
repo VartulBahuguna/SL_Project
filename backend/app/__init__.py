@@ -7,6 +7,8 @@ from flask_wtf.csrf import CSRFProtect
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_cors import CORS
+from flask_wtf.csrf import generate_csrf
+from flask_wtf import csrf
 
 from config import Config
 import os
@@ -20,7 +22,8 @@ jwt = JWTManager()
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-    app.config['WTF_CSRF_ENABLED'] = False
+    # app.config['WTF_CSRF_ENABLED'] = False
+    CSRFProtect(app)
 
     CORS(app)
 

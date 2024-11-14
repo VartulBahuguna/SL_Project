@@ -53,6 +53,12 @@ medical-platform/
 │   │   ├── components/           # Individual components for each part of the app
 │   │   │   ├── Auth/             # Components for authentication
 │   │   │   │   └── Login.js      # Login page component
+│   │   │   │       ├──AdminLogin.js
+│   │   │   │       ├──DoctorLogin.js
+│   │   │   │       ├──PatientLogin.js
+│   │   │   │       SignUp        #SignUp page
+│   │   │   │       ├──DoctorSignUp.js
+│   │   │   │       └──PatientSignUP.js
 │   │   │   ├── Dashboard/        # Dashboard components for different user types
 │   │   │   │   ├── PatientDashboard.js   # Patient dashboard component
 │   │   │   │   ├── DoctorDashboard.js    # Doctor dashboard component
@@ -68,13 +74,18 @@ medical-platform/
 │   │   │   ├── Analytics/        # Statistics and analytics for admin
 │   │   │   │   └── Statistics.js       # View platform statistics
 │   │   │   └── NotFound.js       # 404 page for undefined routes
+│   │   │   └── LandingPage.js    # page for "/" Urls to give login and SignUp option for patient doctor and admin       
 │   │   ├── styles/               # CSS files for styling each component
-│   │   │   ├── App.css           # Global styles for the app
-│   │   │   ├── Dashboard.css     # Styles for dashboard pages
-│   │   │   ├── Auth.css          # Styles for authentication pages
-│   │   │   ├── Profile.css       # Styles for profile pages
-│   │   │   ├── Reports.css       # Styles for reports pages
-│   │   │   └── Analytics.css     # Styles for analytics page
+│   │   │   ├── Analytics.css        # Styles for analytics section or component
+│   │   │   ├── App.css              # Main application styles
+│   │   │   ├── Appointments.css     # Styles for appointments component or section
+│   │   │   ├── Dashboard.css        # Dashboard-specific styles
+│   │   │   ├── global.css           # Global styles for the entire application
+│   │   │   └── landingpage.css      # Styles for the landing page
+│   │   │   ├── login.css            # Styles for the login page      
+│   │   │   ├── Profile.css          # Profile-specific styles
+│   │   │   ├── Reports.css          # Styles for reports section or page 
+│   │   │   └── signup.css           # Styles for the signup page
 │   │   ├── App.js                # Main React component, manages routes and layout
 │   │   ├── index.js              # Entry point for the React app
 │   │   └── index.css             # Global styling for the React app (optional)

@@ -1,12 +1,2 @@
-Flask
-Flask-SQLAlchemy
-elastic-apm
-Flask-Bcrypt
-Flask-JWT-Extended
-Flask-WTF
-Flask-Limiter
-pandas
-celery
-redis
-python-dotenv
-PyPDF2
+cryptography
+flask_cors

@@ -1,88 +1,71 @@
 from flask import Blueprint, request, jsonify
-from app.models import User, db, Appointment
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from app.models import Doctor, db, Administrator
+from flask_jwt_extended import jwt_required, get_jwt_identity,create_access_token
+from .. import bcrypt
 from elasticapm import capture_span
-from tasks import assign_doctors
-from .. import apm
 
 admin_blueprint = Blueprint('admin', __name__)
-
-@admin_blueprint.route('/api/admin/assign-doctors', methods=['POST'])
-@jwt_required()
-@capture_span()
-def manual_assign_doctors():
-    try:
-        # Check if the user is an admin
-        user_id = get_jwt_identity()['id']
-        user = User.query.get(user_id)
-        if not user or user.role != 'admin':
-            return jsonify({'message': 'Unauthorized'}), 403
-
-        # Trigger the doctor assignment task
-        assign_doctors.apply_async()
-        return jsonify({'message': 'Doctor assignment task triggered'}), 202
-    except Exception as e:
-        apm.capture_exception()
-        return jsonify({'message': 'Error triggering doctor assignment', 'error': str(e)}), 500
 
 @admin_blueprint.route('/api/admin/add-doctor', methods=['POST'])
 @jwt_required()
 @capture_span()
 def add_doctor():
     try:
-        # Check if the user is an admin
-        user_id = get_jwt_identity()['id']
-        user = User.query.get(user_id)
-        if not user or user.role != 'admin':
+        # Verify if the current user is an admin
+        user_role = get_jwt_identity().get('role')
+        if user_role != 'admin':
             return jsonify({'message': 'Unauthorized'}), 403
 
+        # Get doctor information from the request
         data = request.json
         name = data.get('name')
         email = data.get('email')
         password = data.get('password')
+        license_number = data.get('license_number')
+        specialization = data.get('specialization')
+        date_of_birth = data.get('date_of_birth')
 
-        if not (name and email and password):
-            return jsonify({'message': 'Invalid data'}), 400
+        # Check if a doctor with the same email or license number already exists
+        if Doctor.query.filter((Doctor.email == email) | (Doctor.license_number == license_number)).first():
+            return jsonify({'message': 'Doctor already exists with this email or license number'}), 409
 
-        # Check if the doctor already exists
-        if User.query.filter_by(email=email).first():
-            return jsonify({'message': 'Doctor already exists'}), 409
-
-        # Create a new doctor user
+        # Hash the password
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-        new_doctor = User(name=name, email=email, password=hashed_password, role='doctor')
+
+        # Create a new Doctor record
+        new_doctor = Doctor(
+            name=name,
+            email=email,
+            password=hashed_password,
+            license_number=license_number,
+            specialization=specialization,
+            date_of_birth=date_of_birth
+        )
         db.session.add(new_doctor)
         db.session.commit()
 
-        return jsonify({'message': 'Doctor added successfully', 'doctor_id': new_doctor.id}), 201
+        return jsonify({'message': 'Doctor added successfully'}), 201
     except Exception as e:
-        apm.capture_exception()
         return jsonify({'message': 'Error adding doctor', 'error': str(e)}), 500
 
-@admin_blueprint.route('/api/admin/assign-patient/<int:appointment_id>', methods=['POST'])
-@jwt_required()
+
+@admin_blueprint.route('/api/admin/login', methods=['POST'])
 @capture_span()
-def assign_patient(appointment_id):
+def login_admin():
     try:
-        # Check if the user is an admin
-        user_id = get_jwt_identity()['id']
-        user = User.query.get(user_id)
-        if not user or user.role != 'admin':
-            return jsonify({'message': 'Unauthorized'}), 403
-
         data = request.json
-        doctor_id = data.get('doctor_id')
+        email = data.get('email')
+        password = data.get('password')
 
-        # Fetch the appointment
-        appointment = Appointment.query.get(appointment_id)
-        if not appointment:
-            return jsonify({'message': 'Appointment not found'}), 404
+        # Retrieve the admin by email
+        admin = Administrator.query.filter_by(email=email).first()
 
-        # Assign the doctor to the appointment
-        appointment.doctor_id = doctor_id
-        db.session.commit()
-
-        return jsonify({'message': 'Patient assigned to doctor successfully'}), 200
+        # Verify the password
+        if admin and bcrypt.check_password_hash(admin.password, password):
+            # Create a JWT token for the admin
+            access_token = create_access_token(identity={'id': admin.id, 'role': 'admin'})
+            return jsonify({'access_token': access_token}), 200
+        else:
+            return jsonify({'message': 'Invalid credentials'}), 401
     except Exception as e:
-        apm.capture_exception()
-        return jsonify({'message': 'Error assigning patient to doctor', 'error': str(e)}), 500
+        return jsonify({'message': 'Error during login', 'error': str(e)}), 500

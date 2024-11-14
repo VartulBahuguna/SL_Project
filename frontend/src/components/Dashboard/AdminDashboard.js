@@ -1,23 +1,32 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Assumes React Router is used for navigation
 import '../../styles/Dashboard.css';
 
 function AdminDashboard() {
+  const navigate = useNavigate();
+
   return (
     <div className="dashboard">
-      <h2>Admin Dashboard</h2>
-      <div className="dashboard-cards">
-        <div className="card">
-          <h3>Manage Doctors</h3>
-          <p>Add, view, and assign doctors to patients.</p>
-        </div>
-        <div className="card">
-          <h3>Patient Assignment</h3>
-          <p>Assign patients to doctors based on appointment requests.</p>
-        </div>
-        <div className="card">
-          <h3>View Statistics</h3>
-          <p>Access platform statistics like doctor-patient ratio.</p>
-        </div>
+      <h2 className="dashboard-title">Admin Dashboard</h2>
+      <div className="dashboard-buttons">
+        <button 
+          className="dashboard-button" 
+          onClick={() => navigate('/manage-doctors')} // URL for Manage Doctors section
+        >
+          Manage Doctors
+        </button>
+        <button 
+          className="dashboard-button" 
+          onClick={() => navigate('/patient-assignment')} // URL for Patient Assignment section
+        >
+          Patient Assignment
+        </button>
+        <button 
+          className="dashboard-button" 
+          onClick={() => navigate('/view-statistics')} // URL for View Statistics section
+        >
+          View Statistics
+        </button>
       </div>
     </div>
   );

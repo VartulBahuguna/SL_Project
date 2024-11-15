@@ -1,4 +1,5 @@
 from app import db, bcrypt
+# from werkzeug.security import safe_str_cmp
 from app.models import Administrator as Admin
 
 def seed_admin():

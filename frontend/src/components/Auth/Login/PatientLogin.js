@@ -1,4 +1,3 @@
-// src/components/PatientLogin.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../styles/login.css';
@@ -11,7 +10,6 @@ function PatientLogin() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log('Patient logging in with:', { username, password });
     
     // Reset error state
     setError('');
@@ -32,17 +30,20 @@ function PatientLogin() {
       // Check if login was successful
       if (response.ok) {
         const data = await response.json();
-        console.log('Login successful:', data);
 
-        // Save the access token (if provided) in localStorage or state
-        localStorage.setItem('access_token', data.access_token);
+        // Check if JWT token is provided
+        if (data.access_token) {
+          // Save the access token in localStorage
+          localStorage.setItem('access_token', data.access_token);
 
-        // Redirect to a protected route or dashboard
-        navigate('/dashboard');
+          // Redirect to the patient's dashboard
+          navigate('/patient-dashboard');
+        } else {
+          setError('Login failed. No token received.');
+        }
       } else {
         // Handle error response
         const errorData = await response.json();
-        console.error('Login failed:', errorData);
         setError(errorData.message || 'Login failed. Please try again.');
       }
     } catch (err) {

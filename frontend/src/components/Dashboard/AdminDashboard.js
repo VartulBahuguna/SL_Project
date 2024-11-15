@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Assumes React Router is used for navigation
+import { useNavigate } from 'react-router-dom';
 import '../../styles/Dashboard.css';
 
 function AdminDashboard() {
@@ -11,19 +11,19 @@ function AdminDashboard() {
       <div className="dashboard-buttons">
         <button 
           className="dashboard-button" 
-          onClick={() => navigate('/manage-doctors')} // URL for Manage Doctors section
+          onClick={() => navigate('/admin-dashboard/manage-doctors')} // Updated URL for Manage Doctors section
         >
           Manage Doctors
         </button>
         <button 
           className="dashboard-button" 
-          onClick={() => navigate('/patient-assignment')} // URL for Patient Assignment section
+          onClick={() => navigate('/patient-assignment')}
         >
           Patient Assignment
         </button>
         <button 
           className="dashboard-button" 
-          onClick={() => navigate('/view-statistics')} // URL for View Statistics section
+          onClick={() => navigate('/view-statistics')}
         >
           View Statistics
         </button>

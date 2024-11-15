@@ -3,12 +3,10 @@ from elasticapm.contrib.flask import ElasticAPM
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
-from flask_wtf.csrf import CSRFProtect
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_cors import CORS
-from flask_wtf.csrf import generate_csrf
-from flask_wtf import csrf
+
 
 from config import Config
 import os
@@ -19,11 +17,11 @@ bcrypt = Bcrypt()
 jwt = JWTManager()
 
 
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-    # app.config['WTF_CSRF_ENABLED'] = False
-    CSRFProtect(app)
+    
 
     CORS(app)
 
@@ -61,9 +59,8 @@ def create_app():
         app=app,
         default_limits=["200 per day", "50 per hour"]
     )
-    from .routes import patient_auth_blueprint, doctor_blueprint, patient_blueprint, analysis_blueprint, admin_blueprint
+    from .routes import  doctor_blueprint, patient_blueprint, analysis_blueprint, admin_blueprint
     # Register blueprints
-    app.register_blueprint(patient_auth_blueprint)
     app.register_blueprint(doctor_blueprint)
     app.register_blueprint(patient_blueprint)
     app.register_blueprint(analysis_blueprint)

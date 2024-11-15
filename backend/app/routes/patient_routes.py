@@ -9,12 +9,13 @@ from cryptography.fernet import Fernet
 from datetime import datetime
 import io
 import uuid
-from flask_wtf.csrf import generate_csrf
+
 
 
 
 
 patient_blueprint = Blueprint('patient_blueprint', __name__)
+
 
 @patient_blueprint.route('/api/patient/login', methods=['POST'])
 @capture_span()
@@ -27,9 +28,8 @@ def login_patient():
         patient = Patient.query.filter_by(email=email).first()
         if patient and bcrypt.check_password_hash(patient.password, password):
             access_token = create_access_token(identity={'id': patient.id, 'role': 'patient'})
-            csrf_token = generate_csrf()
             # access_token = "random_thing"
-            return jsonify({'access_token': access_token, "csrf_token" : csrf_token}), 200
+            return jsonify({'access_token': access_token}), 200
 
         return jsonify({'message': 'Invalid credentials'}), 401
     except Exception as e:
@@ -177,7 +177,7 @@ def register_patient():
 
         # Create a new Patient record
         new_patient = Patient(
-            id = uuid.uuid4(),
+            id = str(uuid.uuid4()),
             name=name,
             email=email,
             password=hashed_password,

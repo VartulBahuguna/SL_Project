@@ -17,6 +17,8 @@ import Reports from './components/Reports/Reports';
 import ReportSummarization from './components/Reports/ReportSummarization';
 import Statistics from './components/Analytics/Statistics';
 import NotFound from './components/NotFound';
+import ManageDoctors from './components/Admin/manage-doctor';
+import AddDoctor from './components/Admin/AddDoctor';
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
         <Route path="/reports" element={<Reports />} />
         <Route path="/summarize-report" element={<ReportSummarization />} />
         <Route path="/admin-dashboard/statistics" element={<Statistics />} />
+        <Route path="/admin-dashboard/manage-doctors" element={<ManageDoctors />} />
+        <Route path="/admin-dashboard/manage-doctors/add-doctor" element={<AddDoctor />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
